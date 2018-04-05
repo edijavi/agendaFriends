@@ -23,10 +23,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/name" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
 
         </TableRow>
 
@@ -155,6 +159,12 @@
                 android:layout_weight="5"
                 android:text="@string/edit"
                 android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save" />
 
         </TableRow>
 
