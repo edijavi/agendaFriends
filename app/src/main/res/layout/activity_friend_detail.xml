@@ -12,6 +12,23 @@
         android:layout_height="wrap_content">
 
         <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/imageUser"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_person_add" />
+
+            <Button
+                android:id="@+id/btnLoadPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Camera" />
+        </TableRow>
+
+        <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -30,7 +47,7 @@
                 android:editable="false"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Ex.Juan" />
 
         </TableRow>
 
@@ -46,10 +63,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/address" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Ex. St. Johns Road" />
 
         </TableRow>
 
@@ -65,10 +85,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/phone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvPhone"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Ex. 666 66 666" />
 
         </TableRow>
 
@@ -84,10 +107,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/email" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="example@example.com" />
 
         </TableRow>
 
@@ -103,10 +129,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/birthday" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvBirthday"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="01/01/2018" />
 
         </TableRow>
 
@@ -122,10 +151,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/website" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvWebsite"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="www.example.com" />
 
         </TableRow>
 
@@ -164,22 +196,11 @@
                 android:id="@+id/buttonSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="5"
                 android:text="Save" />
 
         </TableRow>
 
     </TableLayout>
-
-    <Button
-        android:id="@+id/btnLoadPicture"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Camera" />
-
-    <ImageView
-        android:id="@+id/imageUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_person_add" />
 
 </LinearLayout>

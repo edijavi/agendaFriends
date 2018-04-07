@@ -1,5 +1,7 @@
 package com.example.stras.mfriends;
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 public class BEFriend {
@@ -12,19 +14,20 @@ public class BEFriend {
     private String email;
     private String phone;
     private Date birthday;
+    private Bitmap image;
 
 
-    public BEFriend(String first_name, String last_name, String address, String website, String email, String phone) {
+    public BEFriend(String first_name, String last_name, String address, String website, String email, String phone, Bitmap image) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.address = address;
         this.website = website;
         this.email = email;
         this.phone = phone;
-
+        this.image = image;
     }
 
-    public BEFriend(long id, String first_name, String last_name, String address, String website, String email, String phone) {
+    public BEFriend(long id, String first_name, String last_name, String address, String website, String email, String phone, Bitmap image) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -32,7 +35,7 @@ public class BEFriend {
         this.website = website;
         this.email = email;
         this.phone = phone;
-
+        this.image = image;
     }
 
     /**
@@ -104,6 +107,30 @@ public class BEFriend {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 
     public String toString() {

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DAO.setContext(this);
+
         loadFriends();
 
         listViewFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,14 +53,21 @@ public class MainActivity extends AppCompatActivity {
     private void loadFriends() {
         DAO dao = DAO.getInstance();
 
-        // Test data
+        /*
         dao.deleteAll();
-        dao.insert(new BEFriend(0, "Jack", "R.", "River Side 48", "www.google.com", "test@gmail.com", "555-777-999"));
-        dao.insert(new BEFriend(1, "Peter", "L.", "River Side 75", "www.bbc.com", "test75@gmail.com", "6547892"));
-        dao.insert(new BEFriend(2, "Jane", "U.", "Desert Side 1112", "www.github.com", "test1112@gmail.com", "+12-555-777-999"));
+
+        dao.insert(new BEFriend("1", "Jack", "R.", "River Side 48", "www.google.com", "test@gmail.com", "555-777-999"));
+        dao.insert(new BEFriend("2", "Peter", "L.", "River Side 75", "www.bbc.com", "test75@gmail.com", "6547892"));
+        dao.insert(new BEFriend("3", "Jane", "U.", "Desert Side 1112", "www.github.com", "test1112@gmail.com", "+12-555-777-999"));
+        */
 
         BEFriendAdapter adapter = new BEFriendAdapter(this, dao.getAll());
         listViewFriends = (ListView) findViewById(R.id.lvFriends);
         listViewFriends.setAdapter(adapter);
+    }
+
+    public void onResume(){
+        super.onResume();
+        loadFriends();
     }
 }

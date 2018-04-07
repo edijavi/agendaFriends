@@ -5,8 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -14,11 +18,33 @@ import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 public class FriendFormActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-
+    private Button btnSave;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_form);
+
+        btnSave = (Button) findViewById(R.id.btnSave);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DAO dao = DAO.getInstance();
+
+                String name = ((EditText) findViewById(R.id.etFirstName)).getText()+"";
+                String lastName = ((EditText) findViewById(R.id.etLastName)).getText()+"";
+                String address = ((EditText) findViewById(R.id.etAddress)).getText()+"";
+                String number = ((EditText) findViewById(R.id.etPhone)).getText()+"";
+                String email = ((EditText) findViewById(R.id.etEmail)).getText()+"";
+                String web = ((EditText) findViewById(R.id.etWebsite)).getText()+"";
+                String birthday = ((TextView) findViewById(R.id.tvBirthday)).getText()+"";
+
+                BEFriend friend = new BEFriend(name, lastName, address, web, email, number, null);
+
+                dao.insert(friend);
+                finish();
+            }
+        });
     }
 
     /**
@@ -74,10 +100,6 @@ public class FriendFormActivity extends AppCompatActivity implements DatePickerD
     public void onClickBack(View view) {
         setResult(RESULT_CANCELED);
         finish();
-    }
-
-    public void onClickAddFriend(View view) {
-
     }
 }
 

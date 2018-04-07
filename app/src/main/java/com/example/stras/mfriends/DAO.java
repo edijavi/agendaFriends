@@ -1,19 +1,24 @@
 package com.example.stras.mfriends;
 
+import java.io.ByteArrayOutputStream;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class DAO {
 
     private static final String DATABASE_NAME = "contacts.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "friend_table";
-    private static final String[] COLUMNS = new String[]{"id", "first_name", "last_name", "address", "website", "email", "phone"};
+    private static final String[] COLUMNS = new String[]{"id", "first_name", "last_name", "address", "website", "email", "phone", "image"};
 
     private static Context context;
 
@@ -39,7 +44,7 @@ public class DAO {
     }
 
     private static final String INSERT = "insert into " + TABLE_NAME +
-            "(first_name,last_name,address,website,email,phone)" + " values (?,?,?,?,?,?)";
+            "(first_name,last_name,address,website,email,phone,image)" + " values (?,?,?,?,?,?,?)";
 
     public long insert(BEFriend friend) {
         this.insertStmt.bindString(1, friend.getFirstName());
@@ -48,6 +53,14 @@ public class DAO {
         this.insertStmt.bindString(4, friend.getWebsite());
         this.insertStmt.bindString(5, friend.getEmail());
         this.insertStmt.bindString(6, friend.getPhone());
+
+        byte [] binaryImage = new byte[0];
+        if (friend.getImage() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            friend.getImage().compress(Bitmap.CompressFormat.PNG, 0, stream);
+            binaryImage = stream.toByteArray();
+        }
+        this.insertStmt.bindBlob(7, binaryImage);
         long id = this.insertStmt.executeInsert();
         friend.setId(id);
         return id;
@@ -63,6 +76,25 @@ public class DAO {
     }
 
     public void update(BEFriend friend) {
+        ContentValues cv = new ContentValues();
+        cv.put("first_name", friend.getName());
+        cv.put("last_name", friend.getLastName());
+        cv.put("address", friend.getAddress());
+        cv.put("website", friend.getWebsite());
+        cv.put("email", friend.getEmail());
+        cv.put("phone", friend.getPhone());
+        byte [] binaryImage = new byte[0];
+        if (friend.getImage() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            friend.getImage().compress(Bitmap.CompressFormat.PNG, 0, stream);
+            binaryImage = stream.toByteArray();
+        }
+        cv.put("image", binaryImage);
+
+        this.db.update(TABLE_NAME, cv, "id = "+ friend.getId(), null);
+
+        /*this.deleteById(friend.getId());
+        this.insert(friend);*/
     }
 
     public ArrayList<BEFriend> getAll() {
@@ -70,8 +102,9 @@ public class DAO {
         Cursor cursor = this.db.query(TABLE_NAME, COLUMNS, null, null, null, null, "first_name desc");
         if (cursor.moveToFirst()) {
             do {
+                Bitmap image = BitmapFactory.decodeByteArray(cursor.getBlob(7), 0, cursor.getBlob(7).length);
                 list.add(new BEFriend(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5), cursor.getString(6)));
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6), image));
             } while (cursor.moveToNext());
         }
         if (!cursor.isClosed()) {
@@ -87,9 +120,9 @@ public class DAO {
         BEFriend friend = null;
         try {
             if (cursor.moveToFirst()) {
-
+                Bitmap image = BitmapFactory.decodeByteArray(cursor.getBlob(7), 0, cursor.getBlob(7).length);
                 friend = new BEFriend(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5), cursor.getString(6));
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6), image);
             }
         } finally {
             cursor.close();
@@ -106,7 +139,7 @@ public class DAO {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE " + TABLE_NAME + " (id INTEGER PRIMARY KEY, first_name TEXT, last_name TEXT, address TEXT, website TEXT, email TEXT, phone TEXT)");
+            db.execSQL("CREATE TABLE " + TABLE_NAME + " (id INTEGER PRIMARY KEY, first_name TEXT, last_name TEXT, address TEXT, website TEXT, email TEXT, phone TEXT, image BLOB)");
         }
 
         @Override
